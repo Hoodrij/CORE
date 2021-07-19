@@ -28,15 +28,15 @@ namespace Core.Tools.Collections
             collection.Add(item);
         }
 
-        public async void RemoveWhere(Predicate<T> match)
+        public async void RemoveWhere(Predicate<T> predicate)
         {
             foreach (T t in collection)
             {
-                if (match.Invoke(t))
+                if (predicate(t))
                     markedForRemoving.Add(t);
             }
             await WaitUnlock();
-            collection.RemoveWhere(match);
+            collection.RemoveWhere(predicate);
             markedForRemoving.Clear();
         }
 

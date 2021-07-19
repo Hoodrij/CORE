@@ -6,22 +6,17 @@ namespace Core.Tools.Observables
 {
     internal class WeakAction<T>
     {
-        public bool IsAlive => owner.IsAlive && (owner != null ? owner.Target != null : false) 
-                                && IsAliveAsMonoBeh();
+        public bool IsAlive => owner.IsAlive && owner?.Target != null && IsAliveAsMonoBeh();
         
         private readonly WeakReference owner;
         private readonly MethodInfo method;
         private readonly object target;
-        
-        public WeakAction(Action<T> action)
+
+        public WeakAction(Action<T> action, object owner = default)
         {
-            owner ??= new WeakReference(action.Target);
+            this.owner = new WeakReference(owner ?? action.Target);
             method = action.Method;
             target = action.Target;
-        }
-        public WeakAction(Action<T> action, object owner) : this(action)
-        {
-            this.owner = new WeakReference(owner != null ? owner : action.Target);
         }
 
         public void Invoke(T t)
@@ -38,22 +33,17 @@ namespace Core.Tools.Observables
     
     internal class WeakAction
     {
-        public bool IsAlive => owner.IsAlive && (owner != null ? owner.Target != null : false) 
-                                && IsAliveAsMonoBeh();
+        public bool IsAlive => owner.IsAlive && owner?.Target != null && IsAliveAsMonoBeh();
         
         private readonly WeakReference owner;
         private readonly MethodInfo method;
         private readonly object target;
         
-        public WeakAction(Action action)
+        public WeakAction(Action action, object owner)
         {
-            owner ??= new WeakReference(action.Target);
+            this.owner = new WeakReference(owner ?? action.Target);
             method = action.Method;
             target = action.Target;
-        }
-        public WeakAction(Action action, object owner) : this(action)
-        {
-            this.owner = new WeakReference(owner != null ? owner : action.Target);
         }
 
         public void Invoke()

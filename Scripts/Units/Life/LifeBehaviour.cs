@@ -2,7 +2,7 @@
 
 namespace Core.Life
 {
-    public class LifeBehaviour : MonoBehaviour
+    internal class LifeBehaviour : MonoBehaviour
     {
         public Units.Life Life { get; set; }
 
