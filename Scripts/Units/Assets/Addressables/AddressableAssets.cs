@@ -1,9 +1,11 @@
 ﻿#if ADDRESSABLES
+using System;
 using System.Threading.Tasks;
 using UnityAsync;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using Object = UnityEngine.Object;
 
 namespace Core.Units
 {
@@ -21,7 +23,8 @@ namespace Core.Units
             if (typeof(T).IsSubclassOf(typeof(Component)))
             { 
                 GameObject gameObject = await CheckExistenceAndLoad<GameObject>(path);
-                return gameObject.GetComponent<T>();
+                T component = gameObject.GetComponent<T>();
+                return component;
             }
         
             return await CheckExistenceAndLoad<T>(path);
