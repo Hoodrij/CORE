@@ -11,7 +11,7 @@ namespace Core.Units
         {
             return await Addressables.LoadAssetAsync<Object>(path).Task;
         }
-
+        
         public async Task<T> Load<T>(string path) where T : Object
         {
             if (typeof(T).IsSubclassOf(typeof(Component)))
@@ -19,7 +19,7 @@ namespace Core.Units
                 GameObject gameObject = await Addressables.LoadAssetAsync<GameObject>(path).Task;
                 return gameObject.GetComponent<T>();
             }
-
+        
             return await Addressables.LoadAssetAsync<T>(path).Task;
         }
     }
